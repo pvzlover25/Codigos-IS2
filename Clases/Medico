@@ -1,0 +1,3 @@
+package Clases;
+
+public record Medico(String rut, String nombre) {}
