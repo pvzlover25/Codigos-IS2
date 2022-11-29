@@ -4,8 +4,6 @@ import java.util.*;
 public class Medicamento {
     private String id,nombre;
     private ArrayList<String> composicion;
-    private int frecuencia,dosis;
-    private Tratamiento t;
     public Medicamento(String id, String nombre, int frecuencia, int dosis, Tratamiento t){
         this.t=t;
         this.id=id;
@@ -25,14 +23,5 @@ public class Medicamento {
     }
     public String getNombre(){
         return nombre;
-    }
-    public int getFrecuencia(){
-        return frecuencia;
-    }
-    public int getDosis(){
-        return dosis;
-    }
-    public Tratamiento getTratamiento(){
-        return t;
     }
 }
