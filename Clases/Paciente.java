@@ -5,6 +5,7 @@ public class Paciente {
     private String rut,nombre,direccion,telefono;
     private boolean sexo; //true para masculino, false para femenino
     private int edad;
+    private ArrayList<Consulta> consultas;
     public Paciente(String rut, String nombre, String direccion, String telefono, boolean sexo, int edad){
         this.rut=rut;
         this.nombre=nombre;
@@ -13,6 +14,12 @@ public class Paciente {
         this.sexo=sexo;
         this.edad=edad;
         consultas=new ArrayList();
+    }
+    public void addConsulta(Consulta c){
+        consultas.add(c);
+    }
+    public List<Consulta> getConsultas(){
+        return Collections.unmodifiableList(consultas);
     }
     public String getSexo(){
         if(sexo) return "Masculino";
