@@ -1,3 +1,20 @@
 package Clases;
+import java.util.Date;
 
-public record Medico(String rut, String nombre) {}
+public class Medico{
+    private String rut,nombre;
+    private CatalogoMedicamento catalogo;
+    private Consulta c;
+    public Medico(String rut, String nombre, Diagnostico d){
+        this.rut=rut;
+        this.nombre=nombre;
+        catalogo=new CatalogoMedicamento();
+        c=new Consulta(new Date(),d);
+    }
+    public void ingresarMedPrescrito(String id_med, int frecuencia, int dosis){
+        Medicamento m=catalogo.encontrarMed(id_med);
+        Diagnostico d=c.diagnostico();
+        Tratamiento t=d.getTratamiento();
+        t.addPrescripcion(new MedicamentoPrescrito(m,frecuencia,dosis));
+    }
+}
