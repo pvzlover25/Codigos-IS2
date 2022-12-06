@@ -1,26 +1,29 @@
 package Clases;
 import java.util.*;
 
-/**
- *
- * @author marag
- */
 public class MedicamentoPrescrito{
     private Medicamento m;
     private int frecuencia,dosis;
     private ArrayList<Hora> horas;
-    public MedicamentoPrescrito(Medicamento m, int frecuencia, int dosis, Hora h){
+    private ArrayList<Ingesta> ingestas;
+    public MedicamentoPrescrito(Medicamento m, int frecuencia, int dosis){
         this.m=m;
         this.frecuencia=frecuencia;
         this.dosis=dosis;
         horas=new ArrayList();
-        horas.add(h);
+        ingestas=new ArrayList();
     }
     public void addHora(Hora h){
         horas.add(h);
     }
+    public void addIngesta(Ingesta ing){
+        ingestas.add(ing);
+    }
     public List<Hora> getHoras(){
         return Collections.unmodifiableList(horas);
+    }
+    public List<Ingesta> getIngestas(){
+        return Collections.unmodifiableList(ingestas);
     }
     public Medicamento getMedicamento(){
         return m;
