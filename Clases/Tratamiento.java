@@ -9,6 +9,7 @@ public class Tratamiento {
         fecha_inicio=inicio;
         fecha_termino=termino;
         this.receta=receta;
+        prescripciones=new ArrayList();
     }
     public void addPrescripcion(MedicamentoPrescrito mp){
         prescripciones.add(mp);
