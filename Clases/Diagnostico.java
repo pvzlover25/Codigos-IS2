@@ -3,12 +3,12 @@ import java.util.*;
 
 public class Diagnostico {
     private String prescripcion,deteccion_enfermedad;
-    private Tratamiento t;
+    private HashMap<String,Tratamiento> tratamientos;
     private ArrayList<String> observaciones;
-    public Diagnostico(String prescripcion, String deteccion_enfermedad, Tratamiento t){
+    public Diagnostico(String prescripcion, String deteccion_enfermedad){
         this.prescripcion=prescripcion;
         this.deteccion_enfermedad=deteccion_enfermedad;
-        this.t=t;
+        tratamientos=new HashMap();
         observaciones=new ArrayList();
     }
     public String getDeteccionEnfermedad(){
@@ -23,7 +23,10 @@ public class Diagnostico {
     public List<String> getObservaciones(){
         return Collections.unmodifiableList(observaciones);
     }
-    public Tratamiento getTratamiento(){
-        return t;
+    public void addTratamiento(Tratamiento t){
+       tratamientos.put(t.getID(), t);
     }
+    public Tratamiento getTratamiento(String id_tr){
+        return tratamientos.get(id_tr);
+    } 
 }
