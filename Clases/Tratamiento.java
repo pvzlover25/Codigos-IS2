@@ -10,7 +10,7 @@ public class Tratamiento {
         fecha_termino=termino;
         this.id=id;
     }
-    public double consultarAdherenciaGlobal(Date fecha1, Date fecha2, int frecuencia){
+    public double calcPGlo(Date fecha1, Date fecha2, int frecuencia){
         int cont=0;
         for(MedicamentoPrescrito mp:prescripciones.values()){
             for(Ingesta ing:mp.getIngestas()){
@@ -20,7 +20,7 @@ public class Tratamiento {
         }
         return calculoAdherencia(cont, fecha1, fecha2, frecuencia);
     }
-    public double consultarAdherenciaDetallada(int umbral, Date fecha1, Date fecha2, int frecuencia){
+    public double calcPDet(int umbral, Date fecha1, Date fecha2, int frecuencia){
         int cont=0;
         for(MedicamentoPrescrito mp:prescripciones.values()){
             for(Hora h:mp.getHoras()){
