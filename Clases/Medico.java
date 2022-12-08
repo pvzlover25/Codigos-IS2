@@ -24,11 +24,11 @@ public class Medico{
     public double consultarAdherenciaGlobal(Date fecha1, Date fecha2, int frecuencia, String id_tr, String id_mp){
         Diagnostico dg=c.diagnostico();
         Tratamiento tr=dg.getTratamiento(id_tr);
-        return tr.consultarAdherenciaGlobal(fecha1, fecha2, frecuencia);
+        return tr.calcPGlo(fecha1, fecha2, frecuencia);
     }
     public double consultarAdherenciaDetallada(int umbral, Date fecha1, Date fecha2, int frecuencia, String id_tr){
         Diagnostico dg=c.diagnostico();
         Tratamiento tr=dg.getTratamiento(id_tr);
-        return tr.consultarAdherenciaDetallada(umbral, fecha1, fecha2, frecuencia);
+        return tr.calcPDet(umbral, fecha1, fecha2, frecuencia);
     }
 }
