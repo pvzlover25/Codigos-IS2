@@ -1,5 +1,5 @@
 package Clases;
-import java.util.Date;
+import java.util.*;
 
 public class Medico{
     private String rut,nombre;
@@ -11,10 +11,56 @@ public class Medico{
         catalogo=new CatalogoMedicamento();
         c=new Consulta(new Date(),d);
     }
-    public void ingresarMedPrescrito(String id_med, int frecuencia, int dosis){
-        Medicamento m=catalogo.encontrarMed(id_med);
-        Diagnostico d=c.diagnostico();
-        Tratamiento t=d.getTratamiento();
-        t.addPrescripcion(new MedicamentoPrescrito(m,frecuencia,dosis));
+    public void ingresarTratamiento(String id, Date fecha_inicio, Date fecha_termino){
+        Diagnostico dg=c.diagnostico();
+        dg.addTratamiento(new Tratamiento(fecha_inicio,fecha_termino,id));
+    }
+    public void ingresarMedPrescrito(String id_med, String id_mp, int frecuencia, int dosis, String id_tr){
+        Medicamento med=catalogo.encontrarMed(id_med);
+        Diagnostico dg=c.diagnostico();
+        Tratamiento tr=dg.getTratamiento(id_tr);
+        tr.addPrescripcion(new MedicamentoPrescrito(med,frecuencia,dosis,id_mp));
+    }
+    public double consultarAdherenciaGlobal(Date fecha1, Date fecha2, int frecuencia, String id_tr, String id_mp){
+        Diagnostico dg=c.diagnostico();
+        Tratamiento tr=dg.getTratamiento(id_tr);
+        MedicamentoPrescrito mp=tr.getPrescripcion(id_mp);
+        int count=0;
+        for(Ingesta ing:mp.getIngestas()){
+            Date dia=ing.dia();
+            if(dia.compareTo(fecha1)>=0 && dia.compareTo(fecha2)<=0) count++;
+        }
+        return calculoAdherencia(count, fecha1, fecha2, frecuencia);
+    }
+    public double consultarAdherenciaDetallada(int umbral, Date fecha1, Date fecha2, int frecuencia, String id_tr){
+        Diagnostico dg=c.diagnostico();
+        Tratamiento tr=dg.getTratamiento(id_tr);
+        //Collection<MedicamentoPrescrito> mp=tr.getPrescripciones();
+        int cont=0;
+        for(MedicamentoPrescrito mp:tr.getPrescripciones()){
+            for(Hora h:mp.getHoras()){
+                GregorianCalendar gc=new GregorianCalendar();
+                gc.setTime(h.hora_notificada());
+                int horaIdeal=Objects.hash(gc.get(Calendar.HOUR),gc.get(Calendar.MINUTE));
+                cont+=count(mp.getIngestas(),fecha1,fecha2,horaIdeal-umbral,horaIdeal+umbral);
+            }
+        }
+        return calculoAdherencia(cont, fecha1, fecha2, frecuencia);
+    }
+    private int count(List<Ingesta> ingestas, Date fecha1, Date fecha2, int inferior, int superior){
+        int ret=0;
+        //Calcular count en base a fecha1, fecha2, inferior y superior
+        return ret;
+    }
+    private double calculoAdherencia(int cont, Date fecha1, Date fecha2, int frecuencia){
+        GregorianCalendar gc=new GregorianCalendar();
+        gc.setTime(fecha1);
+        int f1=gc.get(Calendar.DAY_OF_YEAR);
+        gc.setTime(fecha2);
+        int f2=gc.get(Calendar.DAY_OF_YEAR);
+        if(f2<f1) f2+=365;
+        int den=(f2-f1)*frecuencia;
+        double ret=(double)cont/den;
+        return ret*100.0;
     }
 }
