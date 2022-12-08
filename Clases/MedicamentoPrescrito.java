@@ -3,6 +3,7 @@ import java.util.*;
 
 public class MedicamentoPrescrito{
     private Medicamento m;
+    private String id;
     private int frecuencia,dosis;
     private ArrayList<Hora> horas;
     private ArrayList<Ingesta> ingestas;
@@ -12,6 +13,9 @@ public class MedicamentoPrescrito{
         this.dosis=dosis;
         horas=new ArrayList();
         ingestas=new ArrayList();
+    }
+    public String getID(){
+        return id;
     }
     public void addHora(Hora h){
         horas.add(h);
